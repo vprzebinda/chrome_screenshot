@@ -13,7 +13,7 @@ import java.security.MessageDigest;
 @RestController
 public class ScreenshotServerApplication {
 
-    private static final String SCREENSHOT_DIRECTORY = "../java-server/screenshots";
+    private static final String SCREENSHOT_DIRECTORY = "screenshots";
 
     public static void main(String[] args) {
         SpringApplication.run(ScreenshotServerApplication.class, args);
@@ -48,10 +48,12 @@ public class ScreenshotServerApplication {
 
     @GetMapping("/screenshots/{key}")
     public ResponseEntity<byte[]> getImage(@PathVariable String key) throws Exception {
-        long intKey = Long.parseLong(key);
-        System.out.println("key " + key);
-        System.out.println("loading " + key + " " + intKey);
-        Path path = Paths.get(SCREENSHOT_DIRECTORY, intKey + ".png");
+        System.out.println("/screenshots/{key} endpoint called with key: " + key);
+        // long intKey = Long.parseLong(key);
+        // System.out.println("loading " + key + " " + intKey);
+        // no reason to mention key twice
+        // Path path = Paths.get(SCREENSHOT_DIRECTORY, intKey + ".png");
+        Path path = Paths.get(SCREENSHOT_DIRECTORY, key + ".png");
         byte[] image = Files.readAllBytes(path);
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.IMAGE_PNG);

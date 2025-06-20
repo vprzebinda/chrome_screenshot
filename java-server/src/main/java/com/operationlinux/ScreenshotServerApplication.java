@@ -13,7 +13,7 @@ import java.security.MessageDigest;
 @RestController
 public class ScreenshotServerApplication {
 
-    private static final String SCREENSHOT_DIRECTORY = "../../../../../../java-server/screenshots";
+    private static final String SCREENSHOT_DIRECTORY = "../java-server/screenshots";
 
     public static void main(String[] args) {
         SpringApplication.run(ScreenshotServerApplication.class, args);
@@ -21,18 +21,26 @@ public class ScreenshotServerApplication {
 
     @GetMapping("/")
     public String root() {
+        System.out.println("Root endpoint called");
         return "";
     }
 
     @GetMapping("/blank")
     public String blank() {
+        System.out.println("/blank endpoint called");
         return "";
     }
 
     @PostMapping("/upload")
     public String upload(@RequestBody byte[] body) throws Exception {
+        System.out.println("/upload endpoint called with body length: " + body.length);
+        if (body.length == 0) {
+            System.out.println("Received empty body, returning empty string");
+            return "";
+        }
         String hashname = calculateHash(body);
         Path path = Paths.get(SCREENSHOT_DIRECTORY, hashname + ".png");
+        System.out.println("The path you will write the ss:  " + path.toAbsolutePath());
         Files.write(path, body);
         System.out.println("hash " + hashname + " " + body.length);
         return hashname;

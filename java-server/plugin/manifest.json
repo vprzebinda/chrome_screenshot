@@ -1,6 +1,6 @@
 {
     "name": "Screenshots",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "description": "Take screenshots",
     "manifest_version": 3,
     "action": {

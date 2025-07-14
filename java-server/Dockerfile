@@ -12,11 +12,9 @@ COPY pom.xml pom.xml
 # Specify the command to run the entrypoint script
 # Run the Maven build to package the application
 #This is at BUILD TIME
-RUN mvn clean package -DskipTests
+RUN mvn clean package
 RUN mkdir screenshots
 
 #Run the application
-# CMD ["java", "-jar", "target/your-application.jar"]
-# For now, just check the maven version
-CMD ["mvn", "spring-boot:run"]
-#Will be mvn spring-boot:run. !
+# CMD ["mvn", "spring-boot:run"]
+CMD ["java", "-jar", "target/screenshot-server-0.1.0.jar"]

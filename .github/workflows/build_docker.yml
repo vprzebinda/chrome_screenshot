@@ -15,7 +15,11 @@ jobs:
       #   uses: docker/login-action@v3
       #   with:
       #     username: ${{ vars.DOCKERHUB_USERNAME }}
-      #     password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - name: List running Docker containers
-        run: docker ps
+      #     password: ${{ secrets.DOCKERHUB_PASSWORD }}
+      - name: Create Docker Image
+        run: | 
+          cd java-server
+          docker build -t chrome_screenshot:latest .
+          echo "Docker image created successfully."
+          docker images
 

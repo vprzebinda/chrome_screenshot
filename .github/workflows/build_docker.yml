@@ -1,0 +1,33 @@
+name: Build Container Pipeline
+on: 
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+      - newbranchy
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ vars.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+      - name: Create Docker Image
+        run: | 
+          cd java-server
+          docker build -t chrome_screenshot:latest .
+          echo "Docker image created successfully."
+          docker images
+      - name: Tag Docker Image
+        run: |
+          docker tag chrome_screenshot:latest ${{ vars.DOCKERHUB_USERNAME }}/chrome_screenshot:latest
+          echo "Docker image tagged successfully."
+          docker images
+      - name: Push Docker Image
+        run: |
+          docker push ${{ vars.DOCKERHUB_USERNAME }}/chrome_screenshot:latest
+          echo "Docker image pushed successfully."

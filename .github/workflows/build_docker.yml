@@ -22,4 +22,9 @@ jobs:
           docker build -t chrome_screenshot:latest .
           echo "Docker image created successfully."
           docker images
+      - name: Tag and push Docker Image
+        run: |
+          docker tag chrome_screenshot:latest ${{ vars.DOCKERHUB_USERNAME }}/chrome_screenshot:latest
+          echo "Docker image tagged successfully."
+          docker images
 

@@ -27,4 +27,7 @@ jobs:
           docker tag chrome_screenshot:latest ${{ vars.DOCKERHUB_USERNAME }}/chrome_screenshot:latest
           echo "Docker image tagged successfully."
           docker images
-
+      - name: Push Docker Image
+        run: |
+          docker push ${{ vars.DOCKERHUB_USERNAME }}/chrome_screenshot:latest
+          echo "Docker image pushed successfully."

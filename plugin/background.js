@@ -1,5 +1,8 @@
 import { readSettings } from './read_settings.js';
 
+// Define a variable to hold the HTTP(S) protocol prefix
+const httpsPrefix = 'http://';
+
 chrome.action.onClicked.addListener(function (tab) {
     let queryOptions = { active: true, lastFocusedWindow: true };
     chrome.tabs.query(queryOptions, ([tab]) => {
@@ -14,7 +17,7 @@ chrome.action.onClicked.addListener(function (tab) {
         async function (dataUrl) {
             const server_name = await readSettings()
             chrome.tabs.create({
-                'active': true, "url": "https://" +
+                'active': true, "url": httpsPrefix +
                     server_name.server_name + "/blank"
             }, function (new_tab) {
                 setTimeout(() => chrome.tabs.sendMessage(new_tab.id, { name: "stream", data: dataUrl },
@@ -26,7 +29,7 @@ chrome.action.onClicked.addListener(function (tab) {
 
 async function uploadscreenshot(blob) {
     const server_name = await readSettings()
-    const upload_url = "https://" + server_name.server_name + "/upload"
+    const upload_url = httpsPrefix + server_name.server_name + "/upload"
     const response = await fetch(upload_url, {
         method: "POST",
         headers: {
@@ -36,7 +39,7 @@ async function uploadscreenshot(blob) {
     })
 
     const responseText = await response.text()
-    const final_url = "https://" + server_name.server_name + "/screenshots/" +
+    const final_url = httpsPrefix + server_name.server_name + "/screenshots/" +
         responseText
     return final_url;
 }

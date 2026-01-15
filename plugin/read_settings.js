@@ -1,6 +1,6 @@
 export function readSettings() {
     return chrome.storage.sync.get({
-        "server_name": 'operationlinux.org:8080',
+        "server_name": 'screenshot.operationlinux.org',
         "passcode": 'none'
       });
 }

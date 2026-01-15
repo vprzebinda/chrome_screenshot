@@ -1,7 +1,7 @@
 import { readSettings } from './read_settings.js';
 
 // Define a variable to hold the HTTP(S) protocol prefix
-const httpsPrefix = 'http://';
+const httpsPrefix = 'https://';
 
 chrome.action.onClicked.addListener(function (tab) {
     let queryOptions = { active: true, lastFocusedWindow: true };
